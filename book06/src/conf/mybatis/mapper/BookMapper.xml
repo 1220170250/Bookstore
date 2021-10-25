@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qinkai.dao.BookDao">
+    <!--使用二级缓存-->
+    <cache></cache>
+    <resultMap id="BaseResultMap" type="com.qinkai.pojo.Book">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="author" property="author"/>
+        <result column="price" property="price"/>
+        <result column="sales" property="sales"/>
+        <result column="stock" property="stock"/>
+        <result column="img_path" property="imagePath"/>
+    </resultMap>
+
+
+    <!--public int addBook(Book book)-->
+    <insert id="addBook" parameterType="com.qinkai.pojo.Book">
+        INSERT INTO t_book(`name` , `author` , `price` , `sales` , `stock` , `img_path`)
+        VALUES(#{name},#{author},#{price},#{sales},#{stock},#{stock})
+    </insert>
+
+
+    <!--public int delBookById(int id)-->
+    <delete id="delBookById" parameterType="java.lang.Integer">
+        DELETE FROM `t_book`
+        WHERE `id` = #{id}
+    </delete>
+
+    <!--public int updateBook(Book book)-->
+    <update id="updateBook" parameterType="com.qinkai.pojo.Book">
+        UPDATE `t_book`
+        SET `name`=#{name},`author`=#{author},`price`=#{price},`sales`=#{sales},`stock`=#{stock},`img_path`=#{stock}
+        WHERE `id` =#{id}
+    </update>
+
+    <!--public Book queryBookById(int id)-->
+    <select id="queryBookById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        SELECT `id` , `name` , `author` , `price` , `sales` , `stock` , `img_path`
+        FROM `t_book`
+        WHERE `id`=#{id}
+    </select>
+
+    <!--public List<Book> queryBooks()-->
+    <select id="queryBooks" resultMap="BaseResultMap" resultType="com.qinkai.pojo.Book">
+        SELECT `id` , `name` , `author` , `price` , `sales` , `stock` , `img_path`
+        FROM `t_book`
+    </select>
+
+    <!--public List<Book> queryForBooksByPrice(int minPrice, int maxPrice)-->
+    <select id="queryForBooksByPrice" resultMap="BaseResultMap" resultType="com.qinkai.pojo.Book"
+            parameterType="java.lang.Integer">
+        SELECT `id` , `name` , `author` , `price` , `sales` , `stock` , `img_path`
+        FROM `t_book`
+        WHERE `price`BETWEEN #{0} AND #{1}
+        ORDER BY `price`
+    </select>
+
+</mapper>

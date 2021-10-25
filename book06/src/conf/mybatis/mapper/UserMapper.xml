@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qinkai.dao.UserDao">
+
+    <resultMap id="BaseResultMap" type="com.qinkai.pojo.User">
+        <id column="id" property="id"/>
+        <result column="username" property="username"/>
+        <result column="password" property="password"/>
+        <result column="email" property="email"/>
+    </resultMap>
+
+    <!--public User queryByUserName(String username);-->
+    <select id="queryByUserName" resultMap="BaseResultMap" parameterType="java.lang.String">
+        SELECT `id`,`username`,`password`,`email`
+        FROM t_user
+        WHERE username= #{username}
+    </select>
+
+    <!--public User queryByUserNameAndPassword(String username,String password);-->
+    <select id="queryByUserNameAndPassword" resultMap="BaseResultMap" parameterType="java.lang.String">
+        SELECT `id`,`username`,`password`,`email`
+        FROM t_user
+        WHERE username= #{0}
+        and password= #{1}
+    </select>
+
+    <!--public int saveUser(User user);-->
+    <insert id="saveUser" parameterType="com.qinkai.pojo.User" >
+        INSERT INTO t_user (`username`,`password`,`email`)
+        values(#{username},#{password},#{email})
+    </insert>
+
+</mapper>
